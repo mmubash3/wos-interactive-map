@@ -6,6 +6,10 @@
 
 _For screenshots and a detailed app presentation, see [docs/presentation.md](docs/presentation.md)._
 
+**📚 API Integration Documentation:**
+- [Whiteout API Integration Guide](docs/WHITEOUT_API_INTEGRATION.md) - Comprehensive technical documentation
+- [API Connection Flow Diagrams](docs/API_CONNECTION_FLOW.md) - Visual flow diagrams and quick reference
+
 ---
 
 ## Lite Version
@@ -27,8 +31,39 @@ Do you want me to also add a little comparison list (e.g. "Full version = with b
 - **Building & Location Management:** Add, edit, and view buildings or points of interest.
 - **RESTful API:** Backend API for CRUD operations on map data.
 - **User Authentication:** Secure endpoints and manage user sessions (no password or roles for the moment).
+- **Whiteout API Integration:** Authenticate users and redeem gift codes through the official Whiteout API.
+- **Automated CAPTCHA Solving:** ML-based CAPTCHA solver for seamless gift code redemption.
 - **Dockerized Deployment:** Easily run the entire stack with Docker Compose.
 - **Environment Configuration:** Flexible setup via `.env` file.
+
+---
+
+## How It Connects to Whiteout
+
+This application connects to the official Whiteout gift code API (`wos-giftcode-api.centurygame.com`) to:
+
+1. **Authenticate Users:** Validates player Furnace IDs (FID) with the Whiteout API
+2. **Retrieve Player Data:** Fetches player information including nickname, level, and avatar
+3. **Redeem Gift Codes:** Automatically redeems gift codes for multiple accounts
+4. **Solve CAPTCHAs:** Uses an ML-based Python service to solve CAPTCHAs required for redemption
+
+### Authentication Flow
+
+```
+User enters FID → Backend signs request with MD5 → Whiteout API validates
+→ Returns player data → Backend generates auth token → User logged in
+```
+
+### Gift Code Redemption Flow
+
+```
+User submits code → For each user: Login → Fetch CAPTCHA → Solve CAPTCHA
+→ Submit code with solution → Handle retries → Return results
+```
+
+**For detailed technical information and flow diagrams, see:**
+- [Whiteout API Integration Guide](docs/WHITEOUT_API_INTEGRATION.md)
+- [API Connection Flow Diagrams](docs/API_CONNECTION_FLOW.md)
 
 ---
 
